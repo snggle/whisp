@@ -1,0 +1,4 @@
+enum AudioSettingsMode {
+  musical,
+  rocket,
+}
