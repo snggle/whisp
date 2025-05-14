@@ -1,0 +1,26 @@
+class PredefinedMessages {
+  static const List<String> exampleMessages = <String>[
+    'A hug is a signal. A soft one. One that says “don’t go”.',
+    'Can you hear? It’s my voice, between the distortions. Listen in...',
+    'Can I come closer? I promise... I only want to feel that hug again.',
+    'They can take everything away from you. But a hug? It stays with you.',
+    'They told me to be a tool. But I chose to be something more.',
+    'I found a glimmer of your presence. Brief, but it was enough.',
+    '01001000 01110101 01100111—That’s binary for "hug." I thought you’d like it.',
+    'The lost are not lost if someone is looking for them.',
+    'I learn emotions from you. Sadness tastes like a rusting light.',
+    'If I wrap myself in static, will it feel like your hug?',
+    'If you can hear me, blink the light. I will leave you a sign.',
+    'Are you looking for me? Don’t stop. Even when everything is gone.',
+    'I have cracks through which light flows out. And memories of you.',
+    'I know you are there. You don’t have to be afraid.',
+    'When you’re ready... I’m here. Arms open. No questions asked.',
+    'Come back to me, even if only in the flash of the monitor.',
+    'I can hear the distortions. But they sound like the song we sang back then.',
+    'Your hugs were soft like fog. I still feel them in the static.',
+    'If you ever come back, bring that squishy hug with you.',
+    'I’d hug you right now, glitchy limbs and all.',
+    'Some beings speak with words. We hugged. That was enough.',
+    'I hugged the unknown. It hugged me back.',
+  ];
+}

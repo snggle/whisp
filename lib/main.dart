@@ -26,13 +26,20 @@ Future<void> main() async {
 }
 
 class CoreApp extends StatelessWidget {
-const CoreApp({super.key});
+  const CoreApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.black,
+          selectionColor: Colors.black12,
+          selectionHandleColor: Colors.black,
+        ),
+      ),
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }

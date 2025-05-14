@@ -8,15 +8,32 @@ class SquareButton extends StatelessWidget {
   final double borderWidth;
   final double borderRadius;
 
-  const SquareButton({
+  const SquareButton.small({
     required this.backgroundColor,
     required this.child,
     required this.onTap,
-    this.sideLength = 50,
-    this.borderWidth = 2,
-    this.borderRadius = 10,
     super.key,
-  });
+  })  : sideLength = 60,
+        borderWidth = 2,
+        borderRadius = 10;
+
+  const SquareButton.medium({
+    required this.backgroundColor,
+    required this.child,
+    required this.onTap,
+    super.key,
+  })  : sideLength = 80,
+        borderWidth = 2.5,
+        borderRadius = 16;
+
+  const SquareButton.big({
+    required this.backgroundColor,
+    required this.child,
+    required this.onTap,
+    super.key,
+  })  : sideLength = 110,
+        borderWidth = 2.5,
+        borderRadius = 20;
 
   @override
   Widget build(BuildContext context) {
