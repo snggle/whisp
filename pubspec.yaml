@@ -23,9 +23,13 @@ dependencies:
   flutter_bloc: 8.1.6
   bloc_test: 9.1.7
 
-  # A package that provides an easy way to add particles animation in Flutter project.
-  # https://pub.dev/packages/particles_flutter
-  particles_flutter: ^1.0.1
+  # A package that allows you to use the native file explorer to pick single or multiple files, with extensions filtering support.
+  # https://pub.dev/packages/file_picker
+  file_picker: 8.0.0
+
+  # Draw SVG files using Flutter.
+  # https://pub.dev/packages/flutter_svg
+  flutter_svg: 2.0.10+1
 
   # A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
   # https://pub.dev/packages/equatable
@@ -35,6 +39,10 @@ dependencies:
   # https://pub.dev/packages/logger
   logger: 2.4.0
 
+  # A package that provides an easy way to add particles animation in Flutter project.
+  # https://pub.dev/packages/particles_flutter
+  particles_flutter: 1.0.1
+
   # A Flutter plugin for finding commonly used locations on the filesystem.
   # https://pub.dev/packages/path_provider
   path_provider: 2.1.4
@@ -43,6 +51,10 @@ dependencies:
   # https://pub.dev/packages/permission_handler
   permission_handler: 11.0.1
   permission_handler_web: 0.0.2
+
+  # A Flutter plugin to share content from your Flutter app via the platform's share dialog.
+  # https://pub.dev/packages/share_plus
+  share_plus: 7.2.2
 
 dev_dependencies:
   flutter_test:
@@ -62,3 +74,13 @@ flutter:
     - assets/cream_cloud_anim.webp
     - assets/cream_cloud.png
     - assets/snggle_face.gif
+    - assets/dice-1-svgrepo-com.svg
+    - assets/dice-2-svgrepo-com.svg
+    - assets/dice-3-svgrepo-com.svg
+    - assets/dice-4-svgrepo-com.svg
+    - assets/dice-5-svgrepo-com.svg
+    - assets/dice-6-svgrepo-com.svg
+  fonts:
+    - family: Kalam
+      fonts:
+        - asset: assets/fonts/Kalam-Bold.ttf
