@@ -29,9 +29,27 @@ dependencies:
   # https://pub.dev/packages/logger
   logger: 2.4.0
 
+  # A package that provides an easy way to add particles animation in Flutter project.
+  # https://pub.dev/packages/particles_flutter
+  particles_flutter: 1.0.1
+
+  # A Flutter plugin for finding commonly used locations on the filesystem.
+  # https://pub.dev/packages/path_provider
+  path_provider: 2.1.4
+
+  # Permission plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API to request and check permissions.
+  # https://pub.dev/packages/permission_handler
+  permission_handler: 11.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/blue_cloud_anim.webp
+    - assets/blue_cloud.png
+    - assets/cream_cloud_anim.webp
+    - assets/cream_cloud.png
+    - assets/snggle_face.gif
