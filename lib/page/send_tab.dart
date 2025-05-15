@@ -1,15 +1,11 @@
-import 'dart:math';
-
 import 'package:whisp/cubit/send_tab_cubit/a_send_tab_state.dart';
 import 'package:whisp/cubit/send_tab_cubit/send_tab_cubit.dart';
 import 'package:whisp/cubit/send_tab_cubit/states/send_tab_emitting_state.dart';
 import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
-import 'package:whisp/shared/utils/predefined_messages.dart';
 import 'package:whisp/widgets/send_tab/buttons_panel.dart';
 import 'package:whisp/widgets/send_tab/message_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SendTab extends StatefulWidget {
   final SendTabCubit sendTabCubit;
@@ -28,18 +24,8 @@ class SendTab extends StatefulWidget {
 }
 
 class _SendTabState extends State<SendTab> {
-  final List<String> _diceIconsPaths = <String>[
-    'assets/dice-1-svgrepo-com.svg',
-    'assets/dice-2-svgrepo-com.svg',
-    'assets/dice-3-svgrepo-com.svg',
-    'assets/dice-4-svgrepo-com.svg',
-    'assets/dice-5-svgrepo-com.svg',
-    'assets/dice-6-svgrepo-com.svg',
-  ];
-
   bool _showPlaceholderBool = true;
   bool _msgEmptyBool = true;
-  int _diceIndex = Random().nextInt(6);
 
   late FocusNode _focusNode;
 
@@ -76,10 +62,6 @@ class _SendTabState extends State<SendTab> {
                 focusNode: _focusNode,
                 themeAssets: widget.themeAssets,
                 messageTextController: widget.messageTextController,
-                dicePicture: SvgPicture.asset(
-                  _diceIconsPaths[_diceIndex],
-                ),
-                onDiceButtonPressed: _rollDice,
                 onClearButtonPressed: _clearMessage,
               ),
               const SizedBox(height: 160),
@@ -97,14 +79,6 @@ class _SendTabState extends State<SendTab> {
         );
       },
     );
-  }
-
-  void _rollDice() {
-    setState(() {
-      int randomIndex = Random().nextInt(PredefinedMessages.exampleMessages.length - 1);
-      widget.messageTextController.text = PredefinedMessages.exampleMessages[randomIndex];
-      _diceIndex = Random().nextInt(6);
-    });
   }
 
   void _clearMessage() {

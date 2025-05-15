@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
+import 'package:whisp/widgets/send_tab/dice_button.dart';
 import 'package:whisp/widgets/square_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:particles_flutter/component/particle/particle.dart';
 import 'package:particles_flutter/particles_engine.dart';
 
@@ -20,8 +20,6 @@ class MessageForm extends StatelessWidget {
   final FocusNode focusNode;
   final ThemeAssets themeAssets;
   final TextEditingController messageTextController;
-  final SvgPicture dicePicture;
-  final VoidCallback onDiceButtonPressed;
   final VoidCallback onClearButtonPressed;
 
   MessageForm({
@@ -31,8 +29,6 @@ class MessageForm extends StatelessWidget {
     required this.focusNode,
     required this.themeAssets,
     required this.messageTextController,
-    required this.dicePicture,
-    required this.onDiceButtonPressed,
     required this.onClearButtonPressed,
     super.key,
   });
@@ -117,13 +113,10 @@ class MessageForm extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              SquareButton(
-                backgroundColor: themeAssets.primaryColor,
-                onTap: emissionInProgressBool ? null : onDiceButtonPressed,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: dicePicture,
-                ),
+              DiceButton(
+                emissionInProgressBool: emissionInProgressBool,
+                color: themeAssets.primaryColor,
+                messageTextController: messageTextController,
               ),
               const SizedBox(width: 15),
               SquareButton(
