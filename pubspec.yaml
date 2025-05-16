@@ -1,0 +1,37 @@
+name: whisp
+description: "Demo application for mrumru."
+publish_to: 'none'
+version: 0.0.1
+
+environment:
+  sdk: "3.2.6"
+  flutter: "3.16.9"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Data Over Audio
+  mrumru:
+    git:
+      url: https://github.com/snggle/mrumru.git
+      ref: dev
+
+  # A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
+  # https://pub.dev/packages/equatable
+  equatable: 2.0.5
+
+  # Flutter Widgets that make it easy to implement the BLoC (Business Logic Component) design pattern. Built to be used with the bloc state management package.
+  # https://pub.dev/packages/flutter_bloc
+  flutter_bloc: 8.1.6
+
+  # Small, easy to use and extensible logger which prints beautiful logs.
+  # https://pub.dev/packages/logger
+  logger: 2.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
