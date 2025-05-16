@@ -49,45 +49,41 @@ class _CartoonCloudState extends State<CartoonCloud> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
-      width: 380,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            top: MediaQuery.of(context).size.height * _positionChangeAnimation.value,
-            left: 0,
-            right: 0,
-            child: Transform.scale(
-              scale: _enlargeAnimation.value,
-              child: ClipRect(
-                child: Align(
-                  heightFactor: 0.8,
-                  widthFactor: 0.8,
-                  alignment: Alignment.center,
-                  child: Opacity(
-                    opacity: _fadeInAnimation.value,
-                    child: widget.cloudMovingBool ? widget.themeAssets.cloudMoving : widget.themeAssets.cloudStill,
-                  ),
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: MediaQuery.of(context).size.height * _positionChangeAnimation.value,
+          left: 0,
+          right: 0,
+          child: Transform.scale(
+            scale: _enlargeAnimation.value,
+            child: ClipRect(
+              child: Align(
+                heightFactor: 0.8,
+                widthFactor: 0.8,
+                alignment: Alignment.center,
+                child: Opacity(
+                  opacity: _fadeInAnimation.value,
+                  child: widget.cloudMovingBool ? widget.themeAssets.cloudMoving : widget.themeAssets.cloudStill,
                 ),
               ),
             ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.1 + 73,
-            left: 0,
-            right: 0,
-            height: 100,
-            child: Opacity(
-              opacity: _snggleFaceFadeInAnimation.value,
-              child: Image.asset(
-                'assets/snggle_face.gif',
-                fit: BoxFit.contain,
-              ),
+        ),
+        Positioned(
+          top: MediaQuery.of(context).size.height * 0.1 + 73,
+          left: 0,
+          right: 0,
+          height: 100,
+          child: Opacity(
+            opacity: _snggleFaceFadeInAnimation.value,
+            child: Image.asset(
+              'assets/snggle_face.gif',
+              fit: BoxFit.contain,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
