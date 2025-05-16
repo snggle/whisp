@@ -43,33 +43,36 @@ class _ActionButtonState extends State<ActionButton> {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: _buttonFadeOutAnimation.value,
-      child: SquareButton(
-        backgroundColor: widget.themeAssets.primaryColor,
-        onTap: widget.recordingFinishingBool
-            ? null
-            : widget.recordingInProgressBool
-                ? widget.onStopRecording
-                : widget.onStartRecording,
-        width: 110,
-        height: 108,
-        borderWidth: 2.5,
-        borderRadius: 20,
-        child: Icon(
-          widget.recordingFinishingBool
-              ? Icons.stop_rounded
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: SquareButton(
+          backgroundColor: widget.themeAssets.primaryColor,
+          onTap: widget.recordingFinishingBool
+              ? null
               : widget.recordingInProgressBool
-                  ? Icons.stop_rounded
-                  : Icons.circle,
-          size: widget.recordingFinishingBool
-              ? 80
-              : widget.recordingInProgressBool
-                  ? 80
-                  : 50,
-          color: widget.recordingFinishingBool
-              ? const Color(0xff244064)
-              : widget.recordingInProgressBool
-                  ? const Color(0xff244064)
-                  : const Color(0xff652121),
+                  ? widget.onStopRecording
+                  : widget.onStartRecording,
+          width: 110,
+          height: 108,
+          borderWidth: 2.5,
+          borderRadius: 20,
+          child: Icon(
+            widget.recordingFinishingBool
+                ? Icons.stop_rounded
+                : widget.recordingInProgressBool
+                    ? Icons.stop_rounded
+                    : Icons.circle,
+            size: widget.recordingFinishingBool
+                ? 80
+                : widget.recordingInProgressBool
+                    ? 80
+                    : 50,
+            color: widget.recordingFinishingBool
+                ? const Color(0xff244064)
+                : widget.recordingInProgressBool
+                    ? const Color(0xff244064)
+                    : const Color(0xff652121),
+          ),
         ),
       ),
     );

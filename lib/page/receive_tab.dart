@@ -82,24 +82,37 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  CartoonCloud(
-                    recordingFinishingBool: _buttonDisabledBool,
-                    cloudMovingBool: _buttonDisabledBool || initialStateBool == false,
-                    fadeInAnimationController: _cloudFadeInController,
-                    expansionAnimationController: _cloudExpansionController,
-                    snggleFaceFadeInController: _snggleFaceFadeInController,
-                    themeAssets: widget.themeAssets,
+                  Expanded(
+                    flex: 3,
+                    child: CartoonCloud(
+                      recordingFinishingBool: _buttonDisabledBool,
+                      cloudMovingBool: _buttonDisabledBool || initialStateBool == false,
+                      fadeInAnimationController: _cloudFadeInController,
+                      expansionAnimationController: _cloudExpansionController,
+                      snggleFaceFadeInController: _snggleFaceFadeInController,
+                      themeAssets: widget.themeAssets,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 100,
+                  const Expanded(
+                    flex: 1,
+                    child: SizedBox(),
                   ),
-                  ActionButton(
-                    recordingInProgressBool: recordingInProgressBool,
-                    recordingFinishingBool: _buttonDisabledBool,
-                    fadeOutAnimationController: _buttonFadeOutController,
-                    themeAssets: widget.themeAssets,
-                    onStartRecording: _startRecording,
-                    onStopRecording: _stopRecording,
+                  Expanded(
+                    flex: 1,
+                    child: Center(
+                      child: ActionButton(
+                        recordingInProgressBool: recordingInProgressBool,
+                        recordingFinishingBool: _buttonDisabledBool,
+                        fadeOutAnimationController: _buttonFadeOutController,
+                        themeAssets: widget.themeAssets,
+                        onStartRecording: _startRecording,
+                        onStopRecording: _stopRecording,
+                      ),
+                    ),
+                  ),
+                  const Expanded(
+                    flex: 1,
+                    child: SizedBox(),
                   ),
                 ],
               ),
