@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   permission_handler_windows
   record_windows
+  win32audio
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
