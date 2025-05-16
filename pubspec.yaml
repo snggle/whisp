@@ -41,6 +41,8 @@ dependencies:
   # https://pub.dev/packages/permission_handler
   permission_handler: 11.0.1
 
+  window_manager: 0.4.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -12,7 +12,12 @@ import 'package:whisp/shared/audio_settings_mode.dart';
 import 'package:whisp/widgets/outlined_icon.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final bool platformWindowsBool;
+
+  const MainPage({
+    required this.platformWindowsBool,
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _MainPageState();
@@ -63,24 +68,40 @@ class _MainPageState extends State<MainPage> {
                 Opacity(
                   opacity: _transferModeBool ? 0.5 : 1,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 44, right: 8),
+                    padding: EdgeInsets.only(
+                      top: widget.platformWindowsBool ? 4 : 44,
+                      right: 8,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        IconButton(
-                          icon: OutlinedIcon(
-                            icon: _selectedSettingsMode == AudioSettingsMode.musical ? Icons.music_note : Icons.rocket_launch,
-                            outlineColor: Colors.black,
-                            fillColor: state.themeAssets.primaryColor,
-                            outlineWidth: 4,
-                            size: 35,
+                        const Expanded(flex: 5, child: SizedBox()),
+                        Expanded(
+                          flex: 1,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: IconButton(
+                              icon: OutlinedIcon(
+                                icon: _selectedSettingsMode == AudioSettingsMode.musical ? Icons.music_note : Icons.rocket_launch,
+                                outlineColor: Colors.black,
+                                fillColor: state.themeAssets.primaryColor,
+                                outlineWidth: 4,
+                                size: 35,
+                              ),
+                              onPressed: _transferModeBool ? null : _handleSettingsSwitched,
+                            ),
                           ),
-                          onPressed: _transferModeBool ? null : _handleSettingsSwitched,
                         ),
-                        IconButton(
-                          icon: state.themeAssets.themeChangeIcon,
-                          onPressed: _transferModeBool ? null : _themeCubit.switchTheme,
+                        Expanded(
+                          flex: 1,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: IconButton(
+                              icon: state.themeAssets.themeChangeIcon,
+                              onPressed: _transferModeBool ? null : _themeCubit.switchTheme,
+                            ),
+                          ),
                         ),
                       ],
                     ),
