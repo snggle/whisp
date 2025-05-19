@@ -19,7 +19,7 @@ fvm use 3.16.9
 fvm flutter pub get
 
 # Run project
-fvm flutter run lib/main.dart
+fvm flutter run lib/main_windows.dart
 ```
 
 To generate config files use

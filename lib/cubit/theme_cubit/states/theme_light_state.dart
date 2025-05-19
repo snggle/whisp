@@ -14,7 +14,7 @@ class ThemeLightState extends AThemeState {
             primaryColor: const Color(0xffffead2),
             particlesColor: const Color(0xff726a60).withOpacity(0.1),
             textColor: Colors.black,
-            themeChangeIcon: const OutlinedIcon(icon: Icons.sunny, outlineWidth: 4, outlineColor: Colors.black, fillColor: Color(0xffffead2), size: 35),
+            themeChangeIcon: const OutlinedIcon(icon: Icons.sunny, outlineWidth: 4, outlineColor: Colors.black, fillColor: Color(0xffffead2), size: 40),
           ),
         );
 
