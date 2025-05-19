@@ -17,7 +17,6 @@ Future<void> main() async {
       titleBarStyle: TitleBarStyle.normal,
       minimumSize: Size(201, 335),
       maximumSize: Size(399, 665),
-
     );
     await windowManager.setAspectRatio(0.6);
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
@@ -39,11 +38,9 @@ class CoreApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(
-        platformWindowsBool: platformWindowsBool,
-      ),
+      home: MainPage(),
     );
   }
 }

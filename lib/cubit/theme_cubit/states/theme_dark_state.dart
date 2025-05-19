@@ -14,7 +14,7 @@ class ThemeDarkState extends AThemeState {
             primaryColor: const Color(0xffd6e7f2),
             particlesColor: const Color(0xff5e676c).withOpacity(0.1),
             textColor: Colors.white,
-            themeChangeIcon: const OutlinedIcon(icon: Icons.nightlight, outlineWidth: 4, outlineColor: Colors.black, fillColor: Color(0xffd6e7f2), size: 35),
+            themeChangeIcon: const OutlinedIcon(icon: Icons.nightlight, outlineWidth: 4, outlineColor: Colors.black, fillColor: Color(0xffd6e7f2), size: 40),
           ),
         );
 

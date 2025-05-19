@@ -12,12 +12,7 @@ import 'package:whisp/shared/audio_settings_mode.dart';
 import 'package:whisp/widgets/outlined_icon.dart';
 
 class MainPage extends StatefulWidget {
-  final bool platformWindowsBool;
-
-  const MainPage({
-    required this.platformWindowsBool,
-    super.key,
-  });
+  const MainPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _MainPageState();
@@ -36,7 +31,8 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    _receiveSub = _receiveTabCubit.stream.listen((AReceiveTabState state) => _toggleIcons());
+    _receiveSub = _receiveTabCubit.stream
+        .listen((AReceiveTabState state) => _toggleIcons());
   }
 
   @override
@@ -54,60 +50,69 @@ class _MainPageState extends State<MainPage> {
         builder: (BuildContext context, AThemeState state) {
           return Scaffold(
             backgroundColor: state.themeAssets.backgroundColor,
-            body: Stack(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                  },
-                  child: ReceiveTab(
-                    receiveTabCubit: _receiveTabCubit,
-                    themeAssets: state.themeAssets,
-                  ),
-                ),
-                Opacity(
-                  opacity: _transferModeBool ? 0.5 : 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: widget.platformWindowsBool ? 4 : 44,
-                      right: 8,
+            body: SafeArea(
+              child: Stack(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                    },
+                    child: ReceiveTab(
+                      receiveTabCubit: _receiveTabCubit,
+                      themeAssets: state.themeAssets,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Expanded(flex: 5, child: SizedBox()),
-                        Expanded(
-                          flex: 1,
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: IconButton(
-                              icon: OutlinedIcon(
-                                icon: _selectedSettingsMode == AudioSettingsMode.musical ? Icons.music_note : Icons.rocket_launch,
-                                outlineColor: Colors.black,
-                                fillColor: state.themeAssets.primaryColor,
-                                outlineWidth: 4,
-                                size: 35,
+                  ),
+                  Opacity(
+                    opacity: _transferModeBool ? 0.5 : 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 4,
+                        right: 8,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Expanded(flex: 5, child: SizedBox()),
+                          Expanded(
+                            flex: 1,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: IconButton(
+                                icon: OutlinedIcon(
+                                  icon: _selectedSettingsMode ==
+                                          AudioSettingsMode.musical
+                                      ? Icons.music_note
+                                      : Icons.rocket_launch,
+                                  outlineColor: Colors.black,
+                                  fillColor: state.themeAssets.primaryColor,
+                                  outlineWidth: 4,
+                                  size: 40,
+                                ),
+                                onPressed: _transferModeBool
+                                    ? null
+                                    : _handleSettingsSwitched,
                               ),
-                              onPressed: _transferModeBool ? null : _handleSettingsSwitched,
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: IconButton(
-                              icon: state.themeAssets.themeChangeIcon,
-                              onPressed: _transferModeBool ? null : _themeCubit.switchTheme,
+                          Expanded(
+                            flex: 1,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: IconButton(
+                                icon: state.themeAssets.themeChangeIcon,
+                                onPressed: _transferModeBool
+                                    ? null
+                                    : _themeCubit.switchTheme,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         });
@@ -115,7 +120,8 @@ class _MainPageState extends State<MainPage> {
 
   void _handleSettingsSwitched() {
     setState(() {
-      int nextIndex = (_selectedSettingsMode.index + 1) % AudioSettingsMode.values.length;
+      int nextIndex =
+          (_selectedSettingsMode.index + 1) % AudioSettingsMode.values.length;
       _selectedSettingsMode = AudioSettingsMode.values[nextIndex];
     });
 
