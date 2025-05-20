@@ -202,6 +202,8 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             //? LIST AUDIO DEVICES
+
+
             Flexible(
                 flex: 3,
                 fit: FlexFit.loose,
@@ -228,6 +230,8 @@ class _MyAppState extends State<MyApp> {
                         ),
                       );
                     })),
+
+
             const Divider(
               thickness: 5,
               height: 10,

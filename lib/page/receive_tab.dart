@@ -8,6 +8,8 @@ import 'package:whisp/cubit/receive_tab_cubit/states/receive_tab_failed_state.da
 import 'package:whisp/cubit/receive_tab_cubit/states/receive_tab_recording_state.dart';
 import 'package:whisp/cubit/receive_tab_cubit/states/receive_tab_result_state.dart';
 import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
+import 'package:whisp/page/device_selector_drawer.dart';
+import 'package:whisp/widgets/outlined_icon.dart';
 import 'package:whisp/widgets/receive_tab/action_button.dart';
 import 'package:whisp/widgets/receive_tab/cartoon_cloud.dart';
 import 'package:whisp/widgets/receive_tab/custom_back_button.dart';
@@ -28,7 +30,8 @@ class ReceiveTab extends StatefulWidget {
   State<StatefulWidget> createState() => _ReceiveTabState();
 }
 
-class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+class _ReceiveTabState extends State<ReceiveTab>
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late AnimationController _cloudFadeInController;
   late AnimationController _cloudExpansionController;
   late AnimationController _cloudBackgroundFadeInController;
@@ -78,6 +81,20 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
 
         return Stack(
           children: <Widget>[
+            Positioned(
+              top: 4,
+              left: 10,
+              child: IconButton(
+                icon: OutlinedIcon(
+                  icon: Icons.settings,
+                  outlineColor: Colors.black,
+                  fillColor: widget.themeAssets.primaryColor,
+                  outlineWidth: 4,
+                  size: 40,
+                ),
+                onPressed: () => _showDeviceSelectionDialog(context),
+              ),
+            ),
             Positioned.fill(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,7 +103,8 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
                     flex: 3,
                     child: CartoonCloud(
                       recordingFinishingBool: _buttonDisabledBool,
-                      cloudMovingBool: _buttonDisabledBool || initialStateBool == false,
+                      cloudMovingBool:
+                          _buttonDisabledBool || initialStateBool == false,
                       fadeInAnimationController: _cloudFadeInController,
                       expansionAnimationController: _cloudExpansionController,
                       snggleFaceFadeInController: _snggleFaceFadeInController,
@@ -135,7 +153,9 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
                     child: CustomBackButton(
                       fadeInAnimationController: _backButtonFadeInController,
                       color: widget.themeAssets.textColor,
-                      onPopInvoked: state is ReceiveTabResultState ? () => widget.receiveTabCubit.resetScreen() : null,
+                      onPopInvoked: state is ReceiveTabResultState
+                          ? () => widget.receiveTabCubit.resetScreen()
+                          : null,
                     ),
                   ),
                 ),
@@ -182,6 +202,25 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
     );
   }
 
+  void _showDeviceSelectionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Select device'),
+        content: const DeviceSelectorDrawer(),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Accept'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<bool> _requestMicPermission() async {
     Permission micPermission = Permission.microphone;
     if (await micPermission.isGranted == false) {
@@ -209,13 +248,20 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
 
   void _initAnimationControllers() {
     Duration animationDuration = const Duration(seconds: 1);
-    _cloudFadeInController = AnimationController(vsync: this, duration: animationDuration);
-    _cloudExpansionController = AnimationController(vsync: this, duration: animationDuration);
-    _cloudBackgroundFadeInController = AnimationController(vsync: this, duration: animationDuration);
-    _buttonFadeOutController = AnimationController(vsync: this, duration: animationDuration);
-    _snggleFaceFadeInController = AnimationController(vsync: this, duration: animationDuration);
-    _msgFadeInController = AnimationController(vsync: this, duration: animationDuration);
-    _backButtonFadeInController = AnimationController(vsync: this, duration: animationDuration);
+    _cloudFadeInController =
+        AnimationController(vsync: this, duration: animationDuration);
+    _cloudExpansionController =
+        AnimationController(vsync: this, duration: animationDuration);
+    _cloudBackgroundFadeInController =
+        AnimationController(vsync: this, duration: animationDuration);
+    _buttonFadeOutController =
+        AnimationController(vsync: this, duration: animationDuration);
+    _snggleFaceFadeInController =
+        AnimationController(vsync: this, duration: animationDuration);
+    _msgFadeInController =
+        AnimationController(vsync: this, duration: animationDuration);
+    _backButtonFadeInController =
+        AnimationController(vsync: this, duration: animationDuration);
   }
 
   Future<void> _animate(BuildContext context, AReceiveTabState state) async {
