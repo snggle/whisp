@@ -18,7 +18,10 @@ fvm use 3.16.9
 # Install required packages in pubspec.yaml
 fvm flutter pub get
 
-# Run project
+# Run project on Android
+fvm flutter run lib/main_android.dart
+
+# Run project on Windows
 fvm flutter run lib/main_windows.dart
 ```
 
