@@ -15,10 +15,9 @@ Future<void> main() async {
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,
-      minimumSize: Size(201, 335),
-      maximumSize: Size(399, 665),
+      minimumSize: Size(200, 400),
+      maximumSize: Size(400, 700),
     );
-    await windowManager.setAspectRatio(0.6);
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
