@@ -8,13 +8,14 @@ import 'package:whisp/cubit/receive_tab_cubit/states/receive_tab_failed_state.da
 import 'package:whisp/cubit/receive_tab_cubit/states/receive_tab_recording_state.dart';
 import 'package:whisp/cubit/receive_tab_cubit/states/receive_tab_result_state.dart';
 import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
-import 'package:whisp/page/device_selector_drawer.dart';
+import 'package:whisp/page/device_selector.dart';
 import 'package:whisp/widgets/outlined_icon.dart';
 import 'package:whisp/widgets/receive_tab/action_button.dart';
 import 'package:whisp/widgets/receive_tab/cartoon_cloud.dart';
 import 'package:whisp/widgets/receive_tab/custom_back_button.dart';
 import 'package:whisp/widgets/receive_tab/decoded_msg.dart';
 import 'package:whisp/widgets/receive_tab/decoded_msg_background.dart';
+import 'package:win32audio/win32audio.dart';
 
 class ReceiveTab extends StatefulWidget {
   final ReceiveTabCubit receiveTabCubit;
@@ -43,13 +44,18 @@ class _ReceiveTabState extends State<ReceiveTab>
   bool _buttonDisabledBool = false;
   List<int> _brokenMessageIndexes = <int>[];
   List<String>? _decodedMessageParts;
+  List<AudioDevice> audioDevices = <AudioDevice>[];
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
     _initAnimationControllers();
-    _requestMicPermission();
-    _cloudFadeInController.forward();
+    await _requestMicPermission();
+    await _cloudFadeInController.forward();
+    await _fetchAudioDevices();
+    if (audioDevices.isEmpty || audioDevices.length > 2) {
+      _showDeviceSelectionDialog(context, audioDevices);
+    }
   }
 
   @override
@@ -92,7 +98,10 @@ class _ReceiveTabState extends State<ReceiveTab>
                   outlineWidth: 4,
                   size: 40,
                 ),
-                onPressed: () => _showDeviceSelectionDialog(context),
+                onPressed: () => _showDeviceSelectionDialog(
+                  context,
+                  audioDevices,
+                ),
               ),
             ),
             Positioned.fill(
@@ -180,6 +189,14 @@ class _ReceiveTabState extends State<ReceiveTab>
     );
   }
 
+  Future<void> _fetchAudioDevices() async {
+    if (!mounted) {
+      return;
+    }
+    audioDevices =
+        await Audio.enumDevices(AudioDeviceType.input) ?? <AudioDevice>[];
+  }
+
   void _showMicPermissionDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -202,20 +219,24 @@ class _ReceiveTabState extends State<ReceiveTab>
     );
   }
 
-  void _showDeviceSelectionDialog(BuildContext context) {
+  void _showDeviceSelectionDialog(
+      BuildContext context, List<AudioDevice> inputDevices) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Select device'),
-        content: const DeviceSelectorDrawer(),
+        title: Text(audioDevices.isEmpty
+            ? 'No access to microphone'
+            : 'Select input device'),
+        content: const DeviceSelector(),
         actions: <Widget>[
-          TextButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Accept'),
-          ),
+          if (audioDevices.isNotEmpty)
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Accept'),
+            ),
         ],
       ),
     );

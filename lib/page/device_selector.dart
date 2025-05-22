@@ -4,16 +4,16 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:win32audio/win32audio.dart';
 
-class DeviceSelectorDrawer extends StatefulWidget {
-  const DeviceSelectorDrawer({Key? key}) : super(key: key);
+class DeviceSelector extends StatefulWidget {
+  const DeviceSelector({super.key});
 
   @override
-  State<DeviceSelectorDrawer> createState() => _DeviceSelectorDrawerState();
+  State<DeviceSelector> createState() => _DeviceSelectorState();
 }
 
 Map<String, Uint8List?> _audioIcons = <String, Uint8List?>{};
 
-class _DeviceSelectorDrawerState extends State<DeviceSelectorDrawer> {
+class _DeviceSelectorState extends State<DeviceSelector> {
   AudioDevice defaultDevice = AudioDevice();
   List<AudioDevice> audioDevices = <AudioDevice>[];
 
@@ -99,7 +99,8 @@ class _DeviceSelectorDrawerState extends State<DeviceSelectorDrawer> {
                     return ListTile(
                       leading: (_audioIcons.containsKey(audioDevices[index].id))
                           ? Image.memory(
-                              _audioIcons[audioDevices[index].id] ?? Uint8List(0),
+                              _audioIcons[audioDevices[index].id] ??
+                                  Uint8List(0),
                               width: 32,
                               height: 32,
                               gaplessPlayback: true,
