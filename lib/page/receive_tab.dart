@@ -47,15 +47,18 @@ class _ReceiveTabState extends State<ReceiveTab>
   List<AudioDevice> audioDevices = <AudioDevice>[];
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
     _initAnimationControllers();
-    await _requestMicPermission();
-    await _cloudFadeInController.forward();
-    await _fetchAudioDevices();
-    if (audioDevices.isEmpty || audioDevices.length > 2) {
-      _showDeviceSelectionDialog(context, audioDevices);
-    }
+    _requestMicPermission();
+    _cloudFadeInController.forward();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _fetchAudioDevices();
+      print('liczba urzadzen: ${audioDevices.length}');
+      if (audioDevices.isEmpty || audioDevices.length > 2) {
+        _showDeviceSelectionDialog(context, audioDevices);
+      }
+    });
   }
 
   @override
@@ -226,7 +229,7 @@ class _ReceiveTabState extends State<ReceiveTab>
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
         title: Text(audioDevices.isEmpty
-            ? 'No access to microphone'
+            ? 'No microphone detected - plug audio input device'
             : 'Select input device'),
         content: const DeviceSelector(),
         actions: <Widget>[
@@ -287,6 +290,7 @@ class _ReceiveTabState extends State<ReceiveTab>
 
   Future<void> _animate(BuildContext context, AReceiveTabState state) async {
     if (state is ReceiveTabEmptyState) {
+      await _snggleFaceFadeInController.reverse();
       await Future.wait(<TickerFuture>[
         _backButtonFadeInController.reverse(),
         _msgFadeInController.reverse(),
