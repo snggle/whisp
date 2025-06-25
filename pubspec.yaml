@@ -1,7 +1,7 @@
 name: whisp
 description: "Demo application for mrumru."
 publish_to: 'none'
-version: 0.0.1
+version: 0.0.2
 
 environment:
   sdk: "3.2.6"
@@ -14,7 +14,7 @@ dependencies:
   # Data Over Audio
   mrumru:
     git:
-      url: https://github.com/snggle/mrumru.git
+      url: git@github.com:snggle/mrumru.git
       ref: dev
 
   # A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
@@ -29,9 +29,39 @@ dependencies:
   # https://pub.dev/packages/logger
   logger: 2.4.0
 
+  # A package that provides an easy way to add particles animation in Flutter project.
+  # https://pub.dev/packages/particles_flutter
+  particles_flutter: 1.0.1
+
+  # A Flutter plugin for finding commonly used locations on the filesystem.
+  # https://pub.dev/packages/path_provider
+  path_provider: 2.1.4
+
+  # Permission plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API to request and check permissions.
+  # https://pub.dev/packages/permission_handler
+  permission_handler: 11.0.1
+
+  # A library to get Audio Devices on Windows.
+  # https://pub.dev/packages/win32audio
+  win32audio: 1.4.0
+
+  # This plugin allows Flutter desktop apps to resizing and repositioning the window.
+  # https://pub.dev/packages/window_manager
+  window_manager: 0.4.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/blue_cloud_anim.webp
+    - assets/blue_cloud.png
+    - assets/cream_cloud_anim.webp
+    - assets/cream_cloud.png
+    - assets/snggle_face.gif
+  fonts:
+    - family: Kalam
+      fonts:
+        - asset: assets/fonts/Kalam-Bold.ttf
