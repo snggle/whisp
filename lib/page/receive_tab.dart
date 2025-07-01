@@ -12,9 +12,11 @@ import 'package:whisp/cubit/receive_tab_cubit/states/receive_tab_result_state.da
 import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
 import 'package:whisp/widgets/action_button.dart';
 import 'package:whisp/widgets/cartoon_cloud.dart';
+import 'package:whisp/widgets/custom_app_bar.dart';
 import 'package:whisp/widgets/decoded_msg/decoded_msg_section.dart';
 import 'package:whisp/widgets/device_selector.dart';
 import 'package:whisp/widgets/settings_button.dart';
+import 'package:whisp/widgets/tab_layout.dart';
 import 'package:win32audio/win32audio.dart';
 
 class ReceiveTab extends StatefulWidget {
@@ -83,47 +85,31 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
         return Stack(
           children: <Widget>[
             Positioned.fill(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  if (Platform.isWindows)
-                    SafeArea(
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Opacity(
-                              opacity: state is ReceiveTabEmptyState ? 1 : 0.5,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: SettingsButton(
-                                  color: widget.themeAssets.primaryColor,
-                                  fadeOutAnimationController: _settingsButtonFadeOutController,
-                                  onPressed: state is ReceiveTabEmptyState ? () => _showDeviceSelectionDialog(context) : null,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Spacer(flex: 5),
-                        ],
+              child: TabLayout(
+                customAppBar: CustomAppBar(
+                  iconsOpacity: initialStateBool ? 1 : 0.5,
+                  iconButtons: <Widget>[
+                    if (Platform.isWindows)
+                      SettingsButton(
+                        color: widget.themeAssets.primaryColor,
+                        fadeOutAnimationController: _settingsButtonFadeOutController,
+                        onPressed: state is ReceiveTabEmptyState ? () => _showDeviceSelectionDialog(context) : null,
                       ),
-                    )
-                  else
-                    const Spacer(flex: 1),
-                  Expanded(
-                    flex: 9,
-                    child: CartoonCloud(
-                      recordingFinishingBool: _actionButtonDisabledBool,
-                      cloudMovingBool: _actionButtonDisabledBool || initialStateBool == false,
-                      fadeInAnimationController: _cloudFadeInController,
-                      expansionAnimationController: _cloudExpansionController,
-                      snggleFaceFadeInController: _snggleFaceFadeInController,
-                      themeAssets: widget.themeAssets,
-                    ),
-                  ),
-                  const Spacer(flex: 2),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
+                  ],
+                ),
+                topWidget: CartoonCloud(
+                  recordingFinishingBool: _actionButtonDisabledBool,
+                  cloudMovingBool: _actionButtonDisabledBool || initialStateBool == false,
+                  fadeInAnimationController: _cloudFadeInController,
+                  expansionAnimationController: _cloudExpansionController,
+                  snggleFaceFadeInController: _snggleFaceFadeInController,
+                  themeAssets: widget.themeAssets,
+                ),
+                bottomWidget: Row(
+                  children: <Widget>[
+                    const Spacer(flex: 14),
+                    Expanded(
+                      flex: 10,
                       child: ActionButton(
                         recordingInProgressBool: recordingInProgressBool,
                         recordingFinishingBool: _actionButtonDisabledBool,
@@ -133,9 +119,9 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
                         onStopRecording: _stopRecording,
                       ),
                     ),
-                  ),
-                  const Spacer(flex: 3),
-                ],
+                    const Spacer(flex: 14),
+                  ],
+                ),
               ),
             ),
             IgnorePointer(
@@ -214,11 +200,20 @@ class _ReceiveTabState extends State<ReceiveTab> with AutomaticKeepAliveClientMi
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('No access to microphone'),
+        title: const Text(
+          'No access to microphone',
+          overflow: TextOverflow.ellipsis,
+        ),
         content: const Text(
           'In order to use this feature, you need to allow the application to use the microphone in system settings.',
         ),
         actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () async {
               await openAppSettings();

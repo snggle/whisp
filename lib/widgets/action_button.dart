@@ -43,16 +43,13 @@ class _ActionButtonState extends State<ActionButton> {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: _buttonFadeOutAnimation.value,
-      child: SquareButton(
+      child: SquareButton.big(
         backgroundColor: widget.themeAssets.primaryColor,
         onTap: widget.recordingFinishingBool
             ? null
             : widget.recordingInProgressBool
                 ? widget.onStopRecording
                 : widget.onStartRecording,
-        sideLength: 110,
-        borderWidth: 2.5,
-        borderRadius: 20,
         child: Icon(
           widget.recordingFinishingBool
               ? Icons.stop_rounded

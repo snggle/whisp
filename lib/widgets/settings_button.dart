@@ -36,18 +36,15 @@ class _SettingsButtonState extends State<SettingsButton> {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: _buttonFadeOutAnimation.value,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 5),
-        child: IconButton(
-          icon: OutlinedIcon(
-            icon: Icons.settings,
-            outlineColor: Colors.black,
-            fillColor: widget.color,
-            outlineWidth: 4,
-            size: 40,
-          ),
-          onPressed: widget.onPressed,
+      child: IconButton(
+        icon: OutlinedIcon(
+          icon: Icons.settings,
+          outlineColor: Colors.black,
+          fillColor: widget.color,
+          outlineWidth: 4,
+          size: 40,
         ),
+        onPressed: widget.onPressed,
       ),
     );
   }

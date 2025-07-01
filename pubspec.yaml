@@ -1,7 +1,7 @@
 name: whisp
 description: "Demo application for mrumru."
 publish_to: 'none'
-version: 0.0.2
+version: 0.0.3
 
 environment:
   sdk: "3.2.6"
@@ -16,6 +16,14 @@ dependencies:
     git:
       url: git@github.com:snggle/mrumru.git
       ref: dev
+
+  # A package that allows you to use the native file explorer to pick single or multiple files, with extensions filtering support.
+  # https://pub.dev/packages/file_picker
+  file_picker: 8.0.0
+
+  # Draw SVG files using Flutter.
+  # https://pub.dev/packages/flutter_svg
+  flutter_svg: 2.0.10+1
 
   # A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
   # https://pub.dev/packages/equatable
@@ -33,6 +41,10 @@ dependencies:
   # https://pub.dev/packages/particles_flutter
   particles_flutter: 1.0.1
 
+  # A comprehensive, cross-platform path manipulation library for Dart.
+  # https://pub.dev/packages/path
+  path: 1.8.3
+
   # A Flutter plugin for finding commonly used locations on the filesystem.
   # https://pub.dev/packages/path_provider
   path_provider: 2.1.4
@@ -49,6 +61,10 @@ dependencies:
   # https://pub.dev/packages/window_manager
   window_manager: 0.4.3
 
+  # A Flutter plugin to share content from your Flutter app via the platform's share dialog.
+  # https://pub.dev/packages/share_plus
+  share_plus: 7.2.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,6 +77,12 @@ flutter:
     - assets/cream_cloud_anim.webp
     - assets/cream_cloud.png
     - assets/snggle_face.gif
+    - assets/dice-1.svg
+    - assets/dice-2.svg
+    - assets/dice-3.svg
+    - assets/dice-4.svg
+    - assets/dice-5.svg
+    - assets/dice-6.svg
   fonts:
     - family: Kalam
       fonts:

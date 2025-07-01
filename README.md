@@ -40,6 +40,18 @@ fvm flutter pub run build_runner
 fvm flutter pub run build_runner watch --delete-conflicting-outputs
 ```
 
+## Tests
+
+To run tests
+
+```bash
+# Run all unit tests
+fvm flutter test test/unit --null-assertions
+
+# Run specific test
+fvm flutter test path/to/test.dart --null-assertions
+```
+
 ## Contributing
 Pull requests are welcomed. For major changes, please open an issue first, to enable a discussion on what you would like to improve. Please make sure to provide and update tests as well.
 

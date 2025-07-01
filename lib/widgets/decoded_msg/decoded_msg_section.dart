@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
+import 'package:whisp/widgets/custom_app_bar.dart';
 import 'package:whisp/widgets/custom_back_button.dart';
 import 'package:whisp/widgets/decoded_msg/decoded_msg.dart';
 import 'package:whisp/widgets/decoded_msg/decoded_msg_background.dart';
@@ -37,23 +38,13 @@ class DecodedMsgSection extends StatelessWidget {
         SafeArea(
           child: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 12, bottom: 12),
-                        child: CustomBackButton(
-                          fadeInAnimationController: backButtonFadeInController,
-                          color: themeAssets.primaryColor,
-                          onPopInvoked: onBackButtonPressed,
-                        ),
-                      ),
-                    ),
+              CustomAppBar(
+                iconButtons: <Widget>[
+                  CustomBackButton(
+                    fadeInAnimationController: backButtonFadeInController,
+                    color: themeAssets.primaryColor,
+                    onPopInvoked: onBackButtonPressed,
                   ),
-                  const Spacer(flex: 5),
                 ],
               ),
               Expanded(
