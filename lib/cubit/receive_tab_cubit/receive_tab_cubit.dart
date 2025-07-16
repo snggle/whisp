@@ -17,7 +17,13 @@ class ReceiveTabCubit extends Cubit<AReceiveTabState> {
   late AudioDecoder _audioDecoder;
   bool _canceledByUserBool = false;
 
-  ReceiveTabCubit() : super(const ReceiveTabEmptyState());
+  ReceiveTabCubit() : super(const ReceiveTabEmptyState()) {
+    _audioDecoder = AudioDecoder(
+      onMetadataFrameReceived: _handleMetadataFrameReceived,
+      onDecodingCompleted: _handleDecodingCompleted,
+      onDecodingFailed: _handleDecodingFailed,
+    );
+  }
 
   void resetScreen() {
     emit(const ReceiveTabEmptyState());
@@ -37,14 +43,8 @@ class ReceiveTabCubit extends Cubit<AReceiveTabState> {
 
   void startRecording() {
     try {
-      _audioDecoder = AudioDecoder(
-        audioSettingsModel: _audioSettingsModel,
-        onMetadataFrameReceived: _handleMetadataFrameReceived,
-        onDecodingCompleted: _handleDecodingCompleted,
-        onDecodingFailed: _handleDecodingFailed,
-      );
       emit(const ReceiveTabRecordingState());
-      _audioDecoder.startRecording();
+      _audioDecoder.startRecording(_audioSettingsModel);
     } catch (e) {
       AppLogger().log(message: 'Cannot start recording: $e');
       emit(const ReceiveTabEmptyState());

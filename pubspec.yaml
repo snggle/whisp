@@ -15,7 +15,7 @@ dependencies:
   mrumru:
     git:
       url: git@github.com:snggle/mrumru.git
-      ref: dev
+      ref: mj-feature/multiple-generators-and-threads
 
   # A package that allows you to use the native file explorer to pick single or multiple files, with extensions filtering support.
   # https://pub.dev/packages/file_picker
