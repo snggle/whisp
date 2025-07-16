@@ -12,18 +12,23 @@ import 'package:share_plus/share_plus.dart';
 import 'package:whisp/cubit/send_tab_cubit/a_send_tab_state.dart';
 import 'package:whisp/cubit/send_tab_cubit/states/send_tab_emitting_state.dart';
 import 'package:whisp/cubit/send_tab_cubit/states/send_tab_empty_state.dart';
+import 'package:whisp/cubit/send_tab_cubit/states/send_tab_preparing_state.dart';
 import 'package:whisp/shared/audio_settings_mode.dart';
 import 'package:whisp/shared/utils/file_utils.dart';
 
 class SendTabCubit extends Cubit<ASendTabState> {
+  late final AudioGenerator _audioGenerator;
   late AudioSettingsModel audioSettingsModel = AudioSettingsModel(
     frequencyGenerator: MusicalFrequencyGenerator(
       frequencies: MusicalFrequencies.fdm9FullScaleAMaj,
     ),
   );
-  AudioGenerator? _audioGenerator;
 
-  SendTabCubit() : super(SendTabEmptyState());
+  SendTabCubit() : super(SendTabEmptyState()) {
+    _audioGenerator = AudioGenerator(onGenerationCompleted: () {
+      emit(SendTabEmptyState());
+    });
+  }
 
   void switchAudioType(AudioSettingsMode audioSettingsMode) {
     if (audioSettingsMode == AudioSettingsMode.rocket) {
@@ -38,23 +43,18 @@ class SendTabCubit extends Cubit<ASendTabState> {
   }
 
   Future<void> playSound(String text) async {
+    emit(SendTabPreparingState());
     Uint8List textBytes = utf8.encode(text);
-    AudioStreamSink audioStreamSink = AudioStreamSink();
-    emit(SendTabEmittingState());
-    _audioGenerator = AudioGenerator(
-      audioSink: audioStreamSink,
+    await _audioGenerator.startGenerating(AudioGeneratorParams(
       audioSettingsModel: audioSettingsModel,
-    );
-    await _audioGenerator!.generate(textBytes);
-
-    await audioStreamSink.future;
-
-    emit(SendTabEmptyState());
+      bytes: textBytes,
+      audioSinkArgs: StreamAudioSinkArgs(),
+    ));
+    emit(SendTabEmittingState());
   }
 
   void stopSound() {
-    _audioGenerator?.stop();
-    emit(SendTabEmptyState());
+    _audioGenerator.cancelGenerating();
   }
 
   Future<void> saveFile(String text) async {
@@ -67,7 +67,7 @@ class SendTabCubit extends Cubit<ASendTabState> {
       // For desktop platforms (Linux, macOS & Windows), this function does not actually
       // save a file. It only opens the dialog to let the user choose a location and
       // file name. This function only returns the **path** to this (non-existing) file.
-      // Since AudioFileSink handles saving the files in both cases,
+      // Since FileAudioSink handles saving the files in both cases,
       // creating a temporary empty file is needed for Android.
       bytes: Platform.isWindows ? null : Uint8List(0),
     );
@@ -93,15 +93,13 @@ class SendTabCubit extends Cubit<ASendTabState> {
     Uint8List textBytes = utf8.encode(text);
     String filePath = '${tempDir.path}/generated_audio_message.wav';
     File wavFile = File(filePath);
-    AudioFileSink audioFileSink = AudioFileSink(wavFile);
-    _audioGenerator = AudioGenerator(
-      audioSink: audioFileSink,
+    await _audioGenerator.startGenerating(AudioGeneratorParams(
       audioSettingsModel: audioSettingsModel,
-    );
-    unawaited(_audioGenerator?.generate(textBytes));
+      bytes: textBytes,
+      audioSinkArgs: FileAudioSinkArgs(file: wavFile),
+    ));
 
-    await audioFileSink.future;
-
+    await _audioGenerator.future;
     XFile xWavFile = XFile(filePath);
     await Share.shareXFiles(<XFile>[xWavFile], text: 'Share');
 
@@ -125,14 +123,11 @@ class SendTabCubit extends Cubit<ASendTabState> {
   Future<void> _writeFile(String text, String outputPath) async {
     Uint8List bytes = Uint8List.fromList(utf8.encode(text));
     File sinkFile = File(outputPath);
-    AudioFileSink audioSink = AudioFileSink(sinkFile);
 
-    _audioGenerator = AudioGenerator(
-      audioSink: audioSink,
+    await _audioGenerator.startGenerating(AudioGeneratorParams(
       audioSettingsModel: audioSettingsModel,
-    );
-    unawaited(_audioGenerator?.generate(bytes));
-
-    await audioSink.future;
+      bytes: bytes,
+      audioSinkArgs: FileAudioSinkArgs(file: sinkFile),
+    ));
   }
 }

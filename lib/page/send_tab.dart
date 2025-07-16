@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:whisp/cubit/send_tab_cubit/a_send_tab_state.dart';
 import 'package:whisp/cubit/send_tab_cubit/send_tab_cubit.dart';
 import 'package:whisp/cubit/send_tab_cubit/states/send_tab_emitting_state.dart';
+import 'package:whisp/cubit/send_tab_cubit/states/send_tab_preparing_state.dart';
 import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
 import 'package:whisp/widgets/buttons_panel.dart';
 import 'package:whisp/widgets/custom_app_bar.dart';
@@ -70,8 +71,9 @@ class _SendTabState extends State<SendTab> {
             onClearButtonPressed: _clearMessage,
           ),
           bottomWidget: ButtonsPanel(
+            buttonsDisabledBool: buttonsDisabledBool,
+            mainButtonDisabledBool: state is SendTabPreparingState || _msgEmptyBool,
             emissionInProgressBool: emissionInProgressBool,
-            msgEmptyBool: _msgEmptyBool,
             themeAssets: widget.themeAssets,
             onSaveButtonPressed: _saveFile,
             onPlayButtonPressed: () => widget.sendTabCubit.playSound(widget.messageTextController.text),

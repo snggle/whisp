@@ -3,8 +3,9 @@ import 'package:whisp/cubit/theme_cubit/theme_assets.dart';
 import 'package:whisp/widgets/square_button.dart';
 
 class ButtonsPanel extends StatelessWidget {
+  final bool buttonsDisabledBool;
+  final bool mainButtonDisabledBool;
   final bool emissionInProgressBool;
-  final bool msgEmptyBool;
   final ThemeAssets themeAssets;
   final VoidCallback onSaveButtonPressed;
   final VoidCallback onPlayButtonPressed;
@@ -12,8 +13,9 @@ class ButtonsPanel extends StatelessWidget {
   final VoidCallback onShareButtonPressed;
 
   const ButtonsPanel({
+    required this.buttonsDisabledBool,
+    required this.mainButtonDisabledBool,
     required this.emissionInProgressBool,
-    required this.msgEmptyBool,
     required this.themeAssets,
     required this.onSaveButtonPressed,
     required this.onPlayButtonPressed,
@@ -24,7 +26,6 @@ class ButtonsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool buttonsDisabledBool = emissionInProgressBool || msgEmptyBool;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -47,7 +48,7 @@ class ButtonsPanel extends StatelessWidget {
             flex: 10,
             child: SquareButton.big(
               backgroundColor: themeAssets.primaryColor,
-              onTap: msgEmptyBool
+              onTap: mainButtonDisabledBool
                   ? null
                   : emissionInProgressBool
                       ? onStopButtonPressed
@@ -55,7 +56,7 @@ class ButtonsPanel extends StatelessWidget {
               child: Icon(
                 emissionInProgressBool ? Icons.stop_rounded : Icons.play_arrow_rounded,
                 size: 80,
-                color: emissionInProgressBool ? const Color(0xff244064) : const Color(0xff396521),
+                color: buttonsDisabledBool ? const Color(0xff244064) : const Color(0xff396521),
               ),
             ),
           ),
